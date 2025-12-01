@@ -75,6 +75,7 @@ class Solution : Solver
             'L' => -1,
             _ => 0
         };
+
         return sign != 0 && int.TryParse(line[1..], out delta);
     }
 
