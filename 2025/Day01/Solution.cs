@@ -2,7 +2,6 @@ using System;
 
 namespace AdventOfCode.Y2025.Day01;
 
-
 [ProblemName("Secret Entrance")]
 class Solution : Solver {
     
