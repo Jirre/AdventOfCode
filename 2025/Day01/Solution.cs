@@ -3,12 +3,13 @@ using System;
 namespace AdventOfCode.Y2025.Day01;
 
 [ProblemName("Secret Entrance")]
-class Solution : Solver {
-    
+class Solution : Solver
+{
     private const int MODULO = 100;
     private const int START_POS = 50;
 
-    public object PartOne(string input) {
+    public object PartOne(string input)
+    {
         int pos = START_POS;
         int count = 0;
 
@@ -26,11 +27,12 @@ class Solution : Solver {
         return count;
     }
 
-    public object PartTwo(string input) {
+    public object PartTwo(string input)
+    {
         int pos = START_POS;
         int collisions = 0;
 
-        foreach (var line in input.AsSpan().EnumerateLines())
+        foreach (ReadOnlySpan<char> line in input.AsSpan().EnumerateLines())
         {
             if (!TryParseLine(line, out int sign, out int delta))
                 continue;
@@ -51,7 +53,6 @@ class Solution : Solver {
         return collisions;
     }
 
-
     /// <summary>
     /// Attempts to parse a line of input.
     /// </summary>
@@ -59,7 +60,8 @@ class Solution : Solver {
     /// <param name="sign"> The direction sign. (R = 1, L = -1) </param>
     /// <param name="delta"> The delta value parsed from the input line. </param>
     /// <returns> Was the line parsed successfully, and is the data valid </returns>
-    private static bool TryParseLine(ReadOnlySpan<char> line, out int sign, out int delta) {
+    private static bool TryParseLine(ReadOnlySpan<char> line, out int sign, out int delta)
+    {
         sign = 0;
         delta = 0;
 
@@ -73,7 +75,6 @@ class Solution : Solver {
             'L' => -1,
             _ => 0
         };
-
         return sign != 0 && int.TryParse(line[1..], out delta);
     }
 
