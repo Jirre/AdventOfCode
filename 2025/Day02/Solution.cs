@@ -128,7 +128,7 @@ class Solution : Solver {
     /// </summary>
     private static List<Range> ParseRanges(string input)
     {
-        List<Range> result = new List<Range>();
+        List<Range> result = [];
 
         foreach (string part in input.Split(',', StringSplitOptions.RemoveEmptyEntries))
         {
