@@ -52,7 +52,7 @@ class Solution : Solver {
 
         List<Range> merged = new List<Range>(all.Count);
 
-        foreach (var r in all)
+        foreach (Range r in all)
         {
             if (merged.Count == 0 || r.Start > merged[^1].End + 1)
             {
@@ -60,7 +60,7 @@ class Solution : Solver {
             }
             else
             {
-                var last = merged[^1];
+                Range last = merged[^1];
                 merged[^1] = new Range(last.Start, Math.Max(last.End, r.End));
             }
         }
