@@ -12,20 +12,18 @@ class Solution : Solver {
     public object PartOne(string input)
     {
         List<V3> points = ParseCoordinates(input);
-        int n = points.Count;
-        
         List<Pair> pairs = GetAllPairs(points);
         pairs.Sort((a, b) => a.Distance.CompareTo(b.Distance));
 
-        UnionHandler unions = new UnionHandler(n);
+        UnionHandler unions = new UnionHandler(points.Count);
         int connections = Math.Min(1000, pairs.Count);
         for (int i = 0; i < connections; i++)
         {
-            (int i1, int i2, _) = pairs[i];
-            unions.Join(i1, i2);
+            Pair pair = pairs[i];
+            unions.Join(pair.A, pair.B);
         }
         
-        List<int> sizes = unions.GetComponentSizes();
+        List<int> sizes = unions.GetUnionSizes();
         
         int[] top3 = sizes.OrderByDescending(x => x).Take(3).ToArray();
 
@@ -35,27 +33,25 @@ class Solution : Solver {
     public object PartTwo(string input)
     {
         List<V3> points = ParseCoordinates(input);
-        int n = points.Count;
-        
         List<Pair> pairs = GetAllPairs(points);
         pairs.Sort((a, b) => a.Distance.CompareTo(b.Distance));
 
-        UnionHandler unions = new UnionHandler(n);
-        int components = n;
+        UnionHandler unions = new UnionHandler(points.Count);
+        int groups = points.Count;
         V3 lastA = default;
         V3 lastB = default;
 
-        foreach ((int i1, int i2, long _) in pairs)
+        foreach (Pair pair in pairs)
         {
-            // If pairs are identical, skip
-            if (!unions.Join(i1, i2)) continue;
-            components--;
+            // If pairs are a part of the same union already, skip
+            if (!unions.Join(pair.A, pair.B)) continue;
+            groups--;
             
-            lastA = points[i1];
-            lastB = points[i2];
+            lastA = points[pair.A];
+            lastB = points[pair.B];
 
             // Stop when fully connected
-            if (components == 1)
+            if (groups == 1)
                 break;
         }
         
@@ -78,6 +74,10 @@ class Solution : Solver {
             .ToList();
     }
 
+    /// <summary>
+    /// Get the distance between nodes
+    /// (no need to sqrt it as we don't actively need the accurate distance, just an ordering based on distance)
+    /// </summary>
     private static long GetDistanceSquared(V3 a, V3 b)
     {
         long dx = a.X - b.X;
@@ -86,15 +86,23 @@ class Solution : Solver {
         return dx * dx + dy * dy + dz * dz;
     }
 
-    private record struct Pair(int I1, int I2, long Distance);
+    private readonly struct Pair(int a, int b, long distance)
+    {
+        public readonly int A = a;
+        public readonly int B = b;
+        public readonly long Distance = distance;
+    }
 
+    /// <summary>
+    /// Get for each point all distances to all other points without doing duplicate work
+    /// </summary>
     private static List<Pair> GetAllPairs(List<V3> points)
     {
-        List<Pair> result = new List<Pair>();
-        int n = points.Count;
+        List<Pair> result = [];
+        int pointCount = points.Count;
 
-        for (int i = 0; i < n; i++)
-        for (int j = i + 1; j < n; j++)
+        for (int i = 0; i < pointCount; i++)
+        for (int j = i + 1; j < pointCount; j++)
             result.Add(new Pair(i, j, GetDistanceSquared(points[i], points[j])));
 
         return result;
@@ -116,6 +124,9 @@ class Solution : Solver {
             }
         }
 
+        /// <summary>
+        /// Get the root parent node of the union this node is a part of
+        /// </summary>
         private int Find(int x)
         {
             if (_parent[x] != x)
@@ -123,6 +134,11 @@ class Solution : Solver {
             return _parent[x];
         }
 
+        /// <summary>
+        /// Join two nodes together in a single union based on the node-ids
+        /// If both nodes are part of two different unions they merge into a single new union
+        /// If both nodes are already part of the same union, do nothing
+        /// </summary>
         public bool Join(int a, int b)
         {
             int ra = Find(a);
@@ -138,7 +154,10 @@ class Solution : Solver {
             return true;
         }
 
-        public List<int> GetComponentSizes()
+        /// <summary>
+        /// Get the number of nodes for each union group
+        /// </summary>
+        public List<int> GetUnionSizes()
         {
             Dictionary<int, int> map = new Dictionary<int, int>();
             for (int i = 0; i < _parent.Length; i++)
