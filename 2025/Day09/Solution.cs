@@ -1,23 +1,27 @@
-using System.Linq;
-
 namespace AdventOfCode.Y2025.Day09;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [ProblemName("Movie Theater")]
 class Solution : Solver
 {
-    private readonly record struct Rect(int X1, int Y1, int X2, int Y2);
+    // ReSharper disable InconsistentNaming
+    private readonly record struct Rect(int aX, int aY, int bX, int bY)
+    {
+        public long Area { get; init; } = (long)(bX - aX + 1) * (bY - aY + 1);
+    }
     private readonly record struct V2(int X, int Y);
+    // ReSharper restore InconsistentNaming
     
     public object PartOne(string input)
     {
         V2[] points = ParsePoints(input);
 
-        return ParseAndOrderRects(points)
-            .Select(GetArea)
-            .FirstOrDefault();
+        return ParseRects(points)
+            .OrderByDescending(r => r.Area)
+            .FirstOrDefault().Area;
     }
 
     public object PartTwo(string input)
@@ -25,10 +29,10 @@ class Solution : Solver
         V2[] points = ParsePoints(input);
         Rect[] boundaries = ParseBoundaries(points);
 
-        return ParseAndOrderRects(points)
+        return ParseRects(points)
             .Where(r => boundaries.All(b => !AABB(r, b)))
-            .Select(GetArea)
-            .FirstOrDefault();
+            .OrderByDescending(r => r.Area)
+            .FirstOrDefault().Area;
     }
 
     private static V2[] ParsePoints(string input) {
@@ -41,44 +45,34 @@ class Solution : Solver
         return points;
     }
 
-    private static Rect ParseRect(V2 p1, V2 p2) {
-        int x1 = Math.Min(p1.X, p2.X);
-        int x2 = Math.Max(p1.X, p2.X);
-        int y1 = Math.Min(p1.Y, p2.Y);
-        int y2 = Math.Max(p1.Y, p2.Y);
-        return new Rect(x1, y1, x2, y2);
-    }
-    
-    /// <summary>
-    /// Generate, order, and loop over the rects of all provided points
-    /// </summary>
-    /// <returns>An enumeration of rectangles sorted by decreasing area.</returns>
-    private static IEnumerable<Rect> ParseAndOrderRects(V2[] points) {
-        List<Rect> rects = [];
-        foreach (V2 p in points)
+    private static IEnumerable<Rect> ParseRects(V2[] points)
+    {
+        for (int i = 0; i < points.Length - 1; i++)
         {
-            foreach (V2 q in points)
+            for (int j = i + 1; j < points.Length; j++)
             {
-                rects.Add(ParseRect(p, q));
+                yield return ParseRect(points[i], points[j]);
             }
         }
-
-        rects.Sort((r1, r2) => GetArea(r2).CompareTo(GetArea(r1)));
-        foreach (Rect r in rects) yield return r;
     }
     
-    private static long GetArea(Rect r) => (long)(r.X2 - r.X1 + 1) * (r.Y2 - r.Y1 + 1);
+    private static Rect ParseRect(V2 a, V2 b) =>
+        new Rect(
+            Math.Min(a.X, b.X),
+            Math.Min(a.Y, b.Y),
+            Math.Max(a.X, b.X),
+            Math.Max(a.Y, b.Y));
 
     /// <summary>
     /// Converts a closed polyline into a set of boundary rectangles
-    /// These rectangles use inclusive coordinates to match <see cref="GetArea(Rect)"/> and <see cref="AABB(Rect, Rect)"/>.
+    /// These rectangles use inclusive coordinates to match <see cref="AABB(Rect, Rect)"/>.
     /// </summary>
-    private static Rect[] ParseBoundaries(V2[] corners) {
-        int n = corners.Length;
-        Rect[] boundaries = new Rect[n];
-        for (int i = 0; i < n; i++) {
-            V2 p1 = corners[i];
-            V2 p2 = corners[(i + 1) % n];
+    private static Rect[] ParseBoundaries(V2[] points) {
+        int pointCount = points.Length;
+        Rect[] boundaries = new Rect[pointCount];
+        for (int i = 0; i < pointCount; i++) {
+            V2 p1 = points[i];
+            V2 p2 = points[(i + 1) % pointCount];
             boundaries[i] = ParseRect(p1, p2);
         }
         return boundaries;
@@ -87,11 +81,10 @@ class Solution : Solver
     /// <summary>
     /// Tests whether two rectangles overlap using inclusive bounds.
     /// </summary>
-    private static bool AABB(Rect a, Rect b) {
-        bool aLeft = a.X2 <= b.X1;
-        bool aRight = a.X1 >= b.X2;
-        bool aAbove = a.Y2 <= b.Y1;
-        bool aBelow = a.Y1 >= b.Y2;
-        return !(aLeft || aRight || aAbove || aBelow);
-    }
+    // ReSharper disable once InconsistentNaming
+    private static bool AABB(Rect a, Rect b) =>
+        a.bX > b.aX &&
+        a.aX < b.bX &&
+        a.bY > b.aY &&
+        a.aY < b.bY;
 }
