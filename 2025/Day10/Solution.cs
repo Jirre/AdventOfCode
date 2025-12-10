@@ -65,7 +65,7 @@ class Solution : AdventOfCode.Solver
         using Optimize opt = ctx.MkOptimize();
         
         // Create a Z3 integer variable for each operation
-        ArithExpr[] opVars = CreateNonNegativeIntVars(ctx, operations.Count, "op");
+        ArithExpr[] opVars = CreateNonNegativeIntVars(ctx, opt, operations.Count, "op");
         
         for (int i = 0; i < targetToggles.Count; i++)
         {
@@ -108,14 +108,13 @@ class Solution : AdventOfCode.Solver
     /// <param name="count">The number of variables to create (one per operation).</param>
     /// <param name="prefix">Prefix to use for naming each variable in the solver.</param>
     /// <returns>An array of Z3 integer expressions representing the operation counts.</returns>
-    private static ArithExpr[] CreateNonNegativeIntVars(Context ctx, int count, string prefix)
+    private static ArithExpr[] CreateNonNegativeIntVars(Context ctx, Optimize opt, int count, string prefix)
     {
         ArithExpr[] operationParams = new ArithExpr[count];
         for (int i = 0; i < count; i++)
         {
-            // Create a new integer variable in Z3
             operationParams[i] = ctx.MkIntConst($"{prefix}_{i}");
-            ctx.MkGe(operationParams[i], ctx.MkInt(0));
+            opt.Add(ctx.MkGe(operationParams[i], ctx.MkInt(0)));
         }
         return operationParams;
     }
