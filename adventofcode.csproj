@@ -11,5 +11,6 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="AngleSharp.Css" Version="0.14.0" />
+    <PackageReference Include="Microsoft.Z3" Version="4.12.2" />
   </ItemGroup>
 </Project>
