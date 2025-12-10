@@ -1,12 +1,10 @@
-
-using System.Text.RegularExpressions;
-
 namespace AdventOfCode.Y2025.Day10;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using Microsoft.Z3;
 
 [ProblemName("Factory")]
