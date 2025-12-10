@@ -100,11 +100,12 @@ class Solution : AdventOfCode.Solver
             ? opVars.Sum(v => ((IntNum) opt.Model.Evaluate(v)).Int)
             : throw new InvalidOperationException("No exact solution found.");
     }
-    
+
     /// <summary>
     /// Creates an array of integer variables representing the number of times each operation is applied.
     /// </summary>
     /// <param name="ctx">The Z3 solver context.</param>
+    /// <param name="opt">The Z3 Optimiser used to apply the new variables to.</param>
     /// <param name="count">The number of variables to create (one per operation).</param>
     /// <param name="prefix">Prefix to use for naming each variable in the solver.</param>
     /// <returns>An array of Z3 integer expressions representing the operation counts.</returns>
