@@ -7,34 +7,34 @@ using System.Text.RegularExpressions;
 [ProblemName("Christmas Tree Farm")]
 class Solution : Solver {
 
-    private record Shape(int W, int H, int[] Counts);
+    private record Area(int W, int H, int[] Counts);
     
     public object PartOne(string input) {
         string[] cells = input.Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
 
-        int[] areas = ParseAreas(cells[..^1]);
-        Shape[] shapes = ParseShapes(cells[^1]);
+        int[] shapes = ParseShapes(cells[..^1]);
+        Area[] areas = ParseAreas(cells[^1]);
 
-        return shapes.Count(shape => Fits(shape, areas));
+        return areas.Count(area => Fits(area, shapes));
     }
 
-    private static int[] ParseAreas(string[] cells) {
-        int[] areas = new int[cells.Length];
+    private static int[] ParseShapes(string[] cells) {
+        int[] shapes = new int[cells.Length];
 
         for (int i = 0; i < cells.Length; i++) {
-            int area = 0;
+            int shape = 0;
             foreach (char ch in cells[i]) {
-                if (ch == '#') area++;
+                if (ch == '#') shape++;
             }
-            areas[i] = area;
+            shapes[i] = shape;
         }
 
-        return areas;
+        return shapes;
     }
 
-    private static Shape[] ParseShapes(string cells) {
+    private static Area[] ParseAreas(string cells) {
         string[] lines = cells.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-        Shape[] shapes = new Shape[lines.Length];
+        Area[] areas = new Area[lines.Length];
 
         for (int i = 0; i < lines.Length; i++) {
             int[] numbers = Regex.Matches(lines[i], @"\d+")
@@ -45,18 +45,18 @@ class Solution : Solver {
             int h = numbers[1];
             int[] counts = numbers[2..];
 
-            shapes[i] = new Shape(w, h, counts);
+            areas[i] = new Area(w, h, counts);
         }
 
-        return shapes;
+        return areas;
     }
 
-    private static bool Fits(Shape shape, int[] areas) {
+    private static bool Fits(Area area, int[] areas) {
         int needed = 0;
 
-        for (int i = 0; i < shape.Counts.Length; i++)
-            needed += shape.Counts[i] * areas[i];
+        for (int i = 0; i < area.Counts.Length; i++)
+            needed += area.Counts[i] * areas[i];
 
-        return needed <= shape.W * shape.H;
+        return needed <= area.W * area.H;
     }
 }
