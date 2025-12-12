@@ -28,17 +28,23 @@ class Solution : Solver
     private static Route Walk(Dictionary<Vector2Int, char> map, Vector2Int start)
     {
         HashSet<Step> seen = new();
+
         Vector2Int pos = start;
-        Vector2Int dir = Vector2Int.Up;
+        Vector2Int dir = Vector2Int.Down;
 
         while (map.ContainsKey(pos) && !seen.Contains(new Step(pos, dir)))
         {
             seen.Add(new Step(pos, dir));
 
+            // If the next tile in the current direction is blocked, rotate clockwise
             if (map.TryGetValue(pos + dir, out char next) && next == '#')
+            {
                 dir = dir.Rotate(90);
+            }
             else
-                pos += dir;
+            {
+                pos += dir; // move forward
+            }
         }
 
         bool isLoop = seen.Contains(new Step(pos, dir));
@@ -63,7 +69,7 @@ class Solution : Solver
         {
             for (int x = 0; x < lines[y].Length; x++)
             {
-                nodes[new Vector2Int(x, lines.Length - 1 - y)] = lines[y][x];
+                nodes[new Vector2Int(x, y)] = lines[y][x];
             }
         }
 

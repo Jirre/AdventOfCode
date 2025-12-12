@@ -68,9 +68,9 @@ public readonly record struct Vector2Int(int x, int y) : IVector<int, Vector2Int
     {
         return degrees switch
         {
-            90 => new Vector2Int(y, -x),
+            90 => new Vector2Int(-y, x),
             180 => new Vector2Int(-x, -y),
-            270 => new Vector2Int(-y, x),
+            270 => new Vector2Int(y, -x),
             _ => throw new ArgumentException("Rotation must be 90, 180, or 270 degrees")
         };
     }
@@ -127,9 +127,9 @@ public readonly record struct Vector2Long(long x, long y) : IVector<long, Vector
     {
         return degrees switch
         {
-            90 => new Vector2Long(y, -x),
+            90 => new Vector2Long(-y, x),
             180 => new Vector2Long(-x, -y),
-            270 => new Vector2Long(-y, x),
+            270 => new Vector2Long(y, -x),
             _ => throw new ArgumentException("Rotation must be 90, 180, or 270 degrees")
         };
     }
