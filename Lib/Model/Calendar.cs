@@ -200,6 +200,8 @@ class Calendar {
                     .Replace("<", "&lt;")
                     .Replace(">", "&gt;")
                     .Replace("&", "&amp;")
+                    .Replace("&amp;lt;", "&lt;")
+                    .Replace("&amp;gt;", "&gt;")
                     .Replace(" ", "&#160;");
                 sb.Append($@"<tspan fill=""{token.RgbaColor}"">{text}</tspan>");
 
