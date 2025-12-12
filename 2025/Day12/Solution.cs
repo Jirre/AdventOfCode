@@ -13,11 +13,9 @@ class Solution : Solver {
         string[] cells = input.Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
 
         int[] areas = ParseAreas(cells[..^1]);
-        Shape[] regions = ParseShapes(cells[^1]);
+        Shape[] shapes = ParseShapes(cells[^1]);
 
-        int count = regions.Count(region => Fits(region, areas));
-
-        return count;
+        return shapes.Count(shape => Fits(shape, areas));
     }
 
     private static int[] ParseAreas(string[] shapes) {
