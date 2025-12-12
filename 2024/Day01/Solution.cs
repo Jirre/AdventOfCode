@@ -2,7 +2,6 @@ namespace AdventOfCode.Y2024.Day01;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 [ProblemName("Historian Hysteria")]
 class Solution : Solver {
