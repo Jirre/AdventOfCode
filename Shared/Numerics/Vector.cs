@@ -1,5 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
-namespace JvLib.Numerics;
+namespace Shared.Numerics;
 
 using System;
 

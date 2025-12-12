@@ -3,7 +3,7 @@ using System.Linq;
 namespace AdventOfCode.Y2024.Day04;
 
 using System.Collections.Generic;
-using JvLib.Numerics;
+using Shared.Numerics;
 
 [ProblemName("Ceres Search")]
 class Solution : Solver
