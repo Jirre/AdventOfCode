@@ -8,8 +8,8 @@ class SplashScreenImpl : SplashScreen {
 
         var color = Console.ForegroundColor;
         Write(0xcc00, false, "           ▄█▄ ▄▄█ ▄ ▄ ▄▄▄ ▄▄ ▄█▄  ▄▄▄ ▄█  ▄▄ ▄▄▄ ▄▄█ ▄▄▄\n           █▄█ █ █ █ █ █▄█ █ █ █   █ █ █▄ ");
-            Write(0xcc00, false, " █  █ █ █ █ █▄█\n           █ █ █▄█ ▀▄▀ █▄▄ █ █ █▄  █▄█ █   █▄ █▄█ █▄█ █▄▄  int y = 2024;\n           ");
-            Write(0xcc00, false, " \n           ");
+            Write(0xcc00, false, " █  █ █ █ █ █▄█\n           █ █ █▄█ ▀▄▀ █▄▄ █ █ █▄  █▄█ █   █▄ █▄█ █▄█ █▄▄  sub y{2024}\n            \n");
+            Write(0xcc00, false, "           ");
             Write(0x888888, false, "          .-----.          .------------------.         \n                  ");
             Write(0xcccccc, false, ".--'");
             Write(0xe3b585, false, "~ ~ ~");
@@ -49,9 +49,9 @@ class SplashScreenImpl : SplashScreen {
             Write(0xcccccc, false, "|   3 ");
             Write(0xffff66, false, "**\n           ");
             Write(0xcccccc, false, "|");
-            Write(0x427322, false, "#");
+            Write(0x488813, false, "@");
             Write(0x5eabb4, false, "..");
-            Write(0x4d8b03, false, "@");
+            Write(0x488813, false, "@");
             Write(0xe3b585, false, "'. ~ ");
             Write(0xcc00, false, "\" ' ");
             Write(0xe3b585, false, "~ ");
@@ -68,10 +68,10 @@ class SplashScreenImpl : SplashScreen {
             Write(0xcccccc, false, "|   4 ");
             Write(0xffff66, false, "**\n           ");
             Write(0xcccccc, false, "|");
-            Write(0x427322, false, "_");
+            Write(0x4d8b03, false, "_");
             Write(0x5eabb4, false, ".~.");
-            Write(0x7fbd39, false, "_");
-            Write(0x488813, false, "@");
+            Write(0x427322, false, "_");
+            Write(0x4d8b03, false, "@");
             Write(0xe3b585, false, "'.. ~ ~ ");
             Write(0xffff66, true, "*");
             Write(0xcccccc, false, "|        | ");
@@ -84,9 +84,10 @@ class SplashScreenImpl : SplashScreen {
             Write(0xffff66, false, "**\n           ");
             Write(0xcccccc, false, "| ");
             Write(0xffffff, false, "||| ");
-            Write(0x4d8b03, false, "@");
-            Write(0x7fbd39, false, "@@");
-            Write(0x488813, false, "@");
+            Write(0x4d8b03, false, "#");
+            Write(0x7fbd39, false, "@");
+            Write(0x488813, false, "#");
+            Write(0x1461f, false, "@");
             Write(0xe3b585, false, "'''...");
             Write(0xcccccc, false, "|        |");
             Write(0xa25151, false, "...     ");
@@ -99,12 +100,7 @@ class SplashScreenImpl : SplashScreen {
             Write(0xcccccc, false, "|");
             Write(0x488813, false, "@");
             Write(0xffffff, false, "~~~");
-            Write(0x4d8b03, false, "@");
-            Write(0x427322, false, "@");
-            Write(0x4d8b03, false, "@");
-            Write(0x488813, false, "@");
-            Write(0x4d8b03, false, "@  ");
-            Write(0x488813, false, "#   ");
+            Write(0x7fbd39, false, "@#@@#      ");
             Write(0xcccccc, false, "|        |");
             Write(0xa5a8af, false, "/\\ ");
             Write(0xa25151, false, "''.  ");
