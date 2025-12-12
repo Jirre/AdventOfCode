@@ -18,12 +18,12 @@ class Solution : Solver {
         return shapes.Count(shape => Fits(shape, areas));
     }
 
-    private static int[] ParseAreas(string[] shapes) {
-        int[] areas = new int[shapes.Length];
+    private static int[] ParseAreas(string[] cells) {
+        int[] areas = new int[cells.Length];
 
-        for (int i = 0; i < shapes.Length; i++) {
+        for (int i = 0; i < cells.Length; i++) {
             int area = 0;
-            foreach (char ch in shapes[i]) {
+            foreach (char ch in cells[i]) {
                 if (ch == '#') area++;
             }
             areas[i] = area;
@@ -32,8 +32,8 @@ class Solution : Solver {
         return areas;
     }
 
-    private static Shape[] ParseShapes(string block) {
-        string[] lines = block.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+    private static Shape[] ParseShapes(string cells) {
+        string[] lines = cells.Split('\n', StringSplitOptions.RemoveEmptyEntries);
         Shape[] shapes = new Shape[lines.Length];
 
         for (int i = 0; i < lines.Length; i++) {
