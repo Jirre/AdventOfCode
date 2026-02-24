@@ -44,6 +44,7 @@ class Solution : Solver
     
     private long Divide(long n, int length, int steps)
     {
+        // ReSharper disable once PossibleLossOfFraction
         long divisor = (long)Math.Pow(10, length / 2);
         long left = n / divisor;
         long right = n % divisor;
