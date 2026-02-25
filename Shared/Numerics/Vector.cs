@@ -28,12 +28,18 @@ internal interface IVector<in T, TSelf> : IEquatable<TSelf>, IComparable<TSelf>
 public readonly record struct Vector2Int(int x, int y) : IVector<int, Vector2Int>
 {
     // Static constants
+    /// <summary>(0, 0)</summary>
     public static Vector2Int Zero => new(0, 0);
+    /// <summary>(1, 1)</summary>
     public static Vector2Int One => new(1, 1);
 
+    /// <summary>(0, 1)</summary>
     public static Vector2Int Up => new(0, 1);
+    /// <summary>(0, -1)</summary>
     public static Vector2Int Down => new(0, -1);
+    /// <summary>(-1, 0)</summary>
     public static Vector2Int Left => new(-1, 0);
+    /// <summary>(1, 0)</summary>
     public static Vector2Int Right => new(1, 0);
 
     // Operators
