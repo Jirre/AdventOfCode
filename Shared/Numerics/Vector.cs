@@ -47,7 +47,10 @@ public readonly record struct Vector2Int(int x, int y) : IVector<int, Vector2Int
     public static Vector2Int operator /(Vector2Int a, Vector2Int b) => new(a.x / b.x, a.y / b.y);
     public static Vector2Int operator /(Vector2Int a, int b) => new(a.x / b, a.y / b);
     public static Vector2Int operator /(int a, Vector2Int b) => new(a / b.x, a / b.y);
-
+    
+    public static Vector2Int operator %(Vector2Int a, Vector2Int b) => new(a.x % b.x, a.y % b.y);
+    public static Vector2Int operator %(Vector2Int a, int b) => new(a.x % b, a.y % b);
+    public static Vector2Int operator %(int a, Vector2Int b) => new(a % b.x, a % b.y);
     
     // Mutations and queries
     public static Vector2Int Abs(Vector2Int value) => new(Math.Abs(value.x), Math.Abs(value.y));
@@ -107,6 +110,10 @@ public readonly record struct Vector2Long(long x, long y) : IVector<long, Vector
     public static Vector2Long operator /(Vector2Long a, Vector2Long b) => new(a.x / b.x, a.y / b.y);
     public static Vector2Long operator /(Vector2Long a, long b) => new(a.x / b, a.y / b);
     public static Vector2Long operator /(long a, Vector2Long b) => new(a / b.x, a / b.y);
+    
+    public static Vector2Long operator %(Vector2Long a, Vector2Long b) => new(a.x % b.x, a.y % b.y);
+    public static Vector2Long operator %(Vector2Long a, long b) => new(a.x % b, a.y % b);
+    public static Vector2Long operator %(long a, Vector2Long b) => new(a % b.x, a % b.y);
     
     // Mutations and queries
     public static Vector2Long Abs(Vector2Long value) => new(Math.Abs(value.x), Math.Abs(value.y));
