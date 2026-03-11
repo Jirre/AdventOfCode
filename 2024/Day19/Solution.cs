@@ -13,7 +13,7 @@ class Solution : Solver {
     public object PartTwo(string input) => 
         GetMatchCounts(input).Sum();
 
-    private IEnumerable<long> GetMatchCounts(string input) {
+    private static IEnumerable<long> GetMatchCounts(string input) {
         string[] blocks = input.Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
         
         Dictionary<char, string[]> groups = blocks[0].Split(", ")
@@ -30,7 +30,7 @@ class Solution : Solver {
         }
     }
 
-    private long Calc(string pattern, int start, Dictionary<char, string[]> groups, long[] cache) {
+    private static long Calc(string pattern, int start, Dictionary<char, string[]> groups, long[] cache) {
         if (start == pattern.Length) return 1;
         if (cache[start] != -1) return cache[start];
 
