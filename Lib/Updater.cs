@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using AdventOfCode.Generator;
 using AdventOfCode.Model;
 using AngleSharp;
+using AngleSharp.Dom;
 using AngleSharp.Io;
 
 namespace AdventOfCode;
